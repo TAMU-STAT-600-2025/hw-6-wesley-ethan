@@ -24,7 +24,12 @@ MyKmeans <- function(X, K, M = NULL, numIter = 100){
   )
   
   # Check whether M is NULL or not. If NULL, initialize based on K random points from X. If not NULL, check for compatibility with X dimensions.
-  
+  if (is.null(M)) { # Check if M is NULL
+    M <- X[sample(nrow(X), K), ] # Sample K rows from X and assign to M
+  }
+  else if (any(dim(M) != c(K, ncol(X)))) { # Check if either dimension of M are not K by p
+    stop(paste("Matrix M is of dimension", nrow(M), "by", ncol(M), "when it should be of dimension", K, "by", ncol(X)))
+  }
   
   # Call C++ MyKmeans_c function to implement the algorithm
   Y = MyKmeans_c(X, K, M, numIter)
