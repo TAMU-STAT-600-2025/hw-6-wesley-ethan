@@ -1,17 +1,41 @@
-#' Title
+#' Multi-class Logistic Regression 
 #'
-#' @param X 
-#' @param y 
-#' @param numIter 
-#' @param eta 
-#' @param lambda 
-#' @param beta_init 
+#' @param X n x p training data, 1st column should be 1s to account for intercept
+#' @param y a vector of size n of class labels, from 0 to K-1
+#' @param numIter number of FIXED iterations of the algorithm, default value is 50
+#' @param eta learning rate, default value is 0.1
+#' @param lambda ridge parameter, default value is 1
+#' @param beta_init (optional) initial starting values of beta for the algorithm, should be p x K matrix 
 #'
-#' @return
+#'  @return A list containing:
+#' \describe{
+#'   \item{objective}{Vector of objective function values at each iteration, including initial.}
+#' }
+#' 
 #' @export
 #'
 #' @examples
 #' # Give example
+#' set.seed(123)
+#' n <- 250 
+#' p <- 3 
+#' 
+#' X <- cbind(1, matrix(rnorm(n * (p-1)), n, p-1))
+#' 
+#' beta_true <- matrix(c(1.5, -1, 0.5, -1, 1, -0.5, 0, 0, 0.5), nrow=p, byrow=TRUE)
+#' 
+#' softmax <- function(z) exp(z)/rowSums(exp(z))
+#' 
+#' probs <- softmax(X %*% beta_true)
+#' 
+#' y <- apply(probs, 1, function(pr) sample(0:(K-1), 1, prob=pr))
+#' 
+#' beta_init <- matrix(0, nrow=p, ncol=K)
+#' 
+#' res_C <- LRMultiClass(X, y, beta_init, numIter=20, eta=0.5, lambda=0.1)
+#' 
+#' 
+#' 
 LRMultiClass <- function(X, y, beta_init = NULL, numIter = 50, eta = 0.1, lambda = 1){
   
   # Compatibility checks from HW3 and initialization of beta_init
@@ -27,11 +51,6 @@ LRMultiClass <- function(X, y, beta_init = NULL, numIter = 50, eta = 0.1, lambda
   # Check for compatibility of dimensions between X and Y
   if(nrow(X) != length(y)){
     stop("Number of rows in X not equal to length of Y")
-  }
-  
-  # Check for compatibility of dimensions between X and Xt
-  if(ncol(X) != ncol(Xt)){
-    stop("Number of cols in X not equal to number cols in Xt")
   }
   
   # Check eta is positive
@@ -60,7 +79,7 @@ LRMultiClass <- function(X, y, beta_init = NULL, numIter = 50, eta = 0.1, lambda
   }
   
   # Call C++ LRMultiClass_c function to implement the algorithm
-  out = LRMultiClass_c(X, y, beta_init, numIter, eta, lambda)
+  out = LRMultiClass_c(X, y, beta, numIter, eta, lambda)
   
   # Return the class assignments
   return(out)
