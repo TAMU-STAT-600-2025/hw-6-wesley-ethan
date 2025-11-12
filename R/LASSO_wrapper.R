@@ -27,6 +27,12 @@ fitLASSO_prox_Nesterov <- function(X, Y, lambda,
     beta_start <- as.numeric(beta_start)
   }
   # Center and standardize X,Y as in HW4
+  # Center Y; scale X columns so that (1/n) * t(X_j) %*% X_j = 1
+  Ybar <- mean(Y)
+  Ytilde <- Y - Ybar
+  scale_vec <- sqrt(colSums(X^2) / n)
+  scale_vec[scale_vec == 0] <- 1  # avoid divide-by-zero for zero columns
+  Xtilde <- sweep(X, 2, scale_vec, "/")
   
   # Call C++ fitLASSOstandardized_prox_Nesterov_c function to implement the algorithm
   beta_tilde = fitLASSOstandardized_prox_Nesterov_c(Xtilde, Ytilde, lambda, beta_start, eps, s)
