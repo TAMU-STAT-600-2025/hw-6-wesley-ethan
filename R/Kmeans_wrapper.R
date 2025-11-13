@@ -1,11 +1,11 @@
 #' K-Means Clustering Algorithm
 #'
-#' @param X n \times p matrix containing $n$ data points to cluster
+#' @param X n x p matrix containing n data points to cluster
 #' @param K integer specifying the number of clusters
-#' @param M (optional) K \times p matrix of cluster centers
+#' @param M (optional) K x p matrix of cluster centers
 #' @param numIter number of maximal iterations for the algorithm, the default value is 100
 #'
-#' @return Returns a vector of length $n$ containing class assignments for each data point.
+#' @return Returns a vector of length n containing class assignments for each data point.
 #' @export
 #'
 #' @examples

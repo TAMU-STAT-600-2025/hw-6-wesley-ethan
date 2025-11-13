@@ -7,16 +7,16 @@
 MyKmeans(X, K, M = NULL, numIter = 100)
 }
 \arguments{
-\item{X}{n \times p matrix containing $n$ data points to cluster}
+\item{X}{n x p matrix containing n data points to cluster}
 
 \item{K}{integer specifying the number of clusters}
 
-\item{M}{(optional) K \times p matrix of cluster centers}
+\item{M}{(optional) K x p matrix of cluster centers}
 
 \item{numIter}{number of maximal iterations for the algorithm, the default value is 100}
 }
 \value{
-Returns a vector of length $n$ containing class assignments for each data point.
+Returns a vector of length n containing class assignments for each data point.
 }
 \description{
 K-Means Clustering Algorithm
