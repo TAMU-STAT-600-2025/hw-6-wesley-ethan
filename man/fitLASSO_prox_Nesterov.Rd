@@ -2,21 +2,44 @@
 % Please edit documentation in R/LASSO_wrapper.R
 \name{fitLASSO_prox_Nesterov}
 \alias{fitLASSO_prox_Nesterov}
-\title{Title}
+\title{LASSO via proximal gradient with Nesterov acceleration}
 \usage{
 fitLASSO_prox_Nesterov(X, Y, lambda, beta_start = NULL, eps = 1e-04, s = 0.01)
 }
 \arguments{
-\item{X}{}
+\item{X}{numeric matrix of predictors, dimension n x p}
 
-\item{lambda}{}
+\item{Y}{numeric response vector of length n}
 
-\item{beta_start}{}
+\item{lambda}{nonnegative tuning parameter for the L1 penalty}
 
-\item{eps}{}
+\item{beta_start}{optional numeric starting vector of length p; default is zeros}
 
-\item{s}{}
+\item{eps}{precision level for convergence assessment (relative change in beta)}
+
+\item{s}{step size for proximal gradient}
+}
+\value{
+A list with components
+\describe{
+  \item{beta}{numeric vector of length p+1; first element is intercept, then p coefficients on the original scale}
+  \item{fmin}{value of the objective function at \code{beta}}
+}
 }
 \description{
-Title
+Fits a LASSO regression
+  (1/(2n)) * ||Y - (b0 + X %*% beta)||^2 + lambda * ||beta||_1
+using proximal gradient descent with Nesterov acceleration. The function
+internally centers Y and scales the columns of X so that (1/n) * t(X_j) %*% X_j = 1,
+solves the standardized problem, and then back-transforms to the original scale.
+}
+\examples{
+set.seed(1)
+n <- 50; p <- 10
+X <- matrix(rnorm(n * p), n, p)
+beta_true <- c(runif(3, -1, 1), rep(0, p - 3))
+Y <- as.numeric(X \%*\% beta_true + rnorm(n, sd = 0.5))
+out <- fitLASSO_prox_Nesterov(X, Y, lambda = 0.2)
+out$beta
+
 }

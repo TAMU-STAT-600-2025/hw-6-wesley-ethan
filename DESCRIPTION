@@ -9,5 +9,5 @@ Description: More about what it does (maybe more than one line)
 License: MIT + file LICENSE
 Imports: Rcpp (>= 1.0.5)
 LinkingTo: Rcpp, RcppArmadillo
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Encoding: UTF-8
