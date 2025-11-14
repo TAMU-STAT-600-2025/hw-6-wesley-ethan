@@ -23,8 +23,9 @@ K-Means Clustering Algorithm
 }
 \examples{
 # Simulated data around two clusters
+set.seed(12)
 X <- rbind(matrix(rnorm(10 * 5, 10), 10, 5), matrix(rnorm(10 * 5, -10), 10, 5))
 
 # Cluster data around centers
-MyKmeans(X, 2, M = rbind(rep(10, 5), rep(-10, 5))
+MyKmeans(X, 2, M = rbind(rep(10, 5), rep(-10, 5)))
 }

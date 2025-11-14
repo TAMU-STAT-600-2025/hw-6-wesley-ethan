@@ -10,10 +10,11 @@
 #'
 #' @examples
 #' # Simulated data around two clusters
+#' set.seed(12)
 #' X <- rbind(matrix(rnorm(10 * 5, 10), 10, 5), matrix(rnorm(10 * 5, -10), 10, 5))
 #' 
 #' # Cluster data around centers
-#' MyKmeans(X, 2, M = rbind(rep(10, 5), rep(-10, 5))
+#' MyKmeans(X, 2, M = rbind(rep(10, 5), rep(-10, 5)))
 MyKmeans <- function(X, K, M = NULL, numIter = 100){
   
   n = nrow(X) # number of rows in X
@@ -36,7 +37,7 @@ MyKmeans <- function(X, K, M = NULL, numIter = 100){
   }
   
   # Call C++ MyKmeans_c function to implement the algorithm
-  Y = MyKmeans_c(X, K, M, numIter)
+  Y = as.vector(MyKmeans_c(X, K, M, numIter))
   
   # Return the class assignments
   return(Y)
