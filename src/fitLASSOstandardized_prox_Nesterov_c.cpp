@@ -49,12 +49,12 @@ arma::colvec fitLASSOstandardized_prox_Nesterov_c(const arma::mat& Xtilde, const
   //arma::mat Xt = arma::trans(Xtilde);     // note: arma::trans, not .t()
   const double inv_n = 1.0 / static_cast<double>(n);
   
-  arma::colvec beta_k = beta_start;       // current iterate beta_k
-  arma::colvec beta_km1 = beta_start;     // previous iterate beta_{k-1}
+  arma::colvec beta_k = beta_start;       // current iteratrion beta_k
+  arma::colvec beta_km1 = beta_start;     // previous iteration beta_{k-1}
   arma::colvec yk = beta_k;               // Nesterov point y_k
   
   double tk = 1.0;                        // initialize Nesterov coefficients at 1
-  const int max_iter = 100000;            // hard guard to avoid infinite loop
+  const int max_iter = 100000;            // Max Iter to avoid infinite loops
   
   for (int it = 0; it < max_iter; ++it) {
     // Gradient at yk: (1/n) * X^T (X*yk - Y)
@@ -85,6 +85,7 @@ arma::colvec fitLASSOstandardized_prox_Nesterov_c(const arma::mat& Xtilde, const
     }
     
     // Check convergence: relative parameter change
+    // break if change is less than eps
     double denom = std::max(1.0, l2norm(beta_k));
     arma::colvec diff = beta_new - beta_k;     // materialize
     double rel_change = l2norm(diff) / denom;
@@ -104,7 +105,7 @@ arma::colvec fitLASSOstandardized_prox_Nesterov_c(const arma::mat& Xtilde, const
     yk       = yk_new;
     tk       = tk1;
     
-    // If we reach last iteration without meeting eps, return last beta_new
+    // If we reach last iteration without meeting precision level eps, return last beta_new
     if (it == max_iter - 1) {
       beta = beta_new;
     }
