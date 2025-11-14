@@ -15,10 +15,11 @@
 #' @export
 #'
 #' @examples
-#' # Give example
+#'
 #' set.seed(123)
 #' n <- 250 
 #' p <- 3 
+#' K <- 3 
 #' 
 #' X <- cbind(1, matrix(rnorm(n * (p-1)), n, p-1))
 #' 
