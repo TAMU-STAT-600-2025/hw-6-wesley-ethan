@@ -16,11 +16,13 @@
 #'
 #' @examples
 #'
+#' # Initialize variables
 #' set.seed(123)
 #' n <- 250 
 #' p <- 3 
 #' K <- 3 
 #' 
+#' # Generate data
 #' X <- cbind(1, matrix(rnorm(n * (p-1)), n, p-1))
 #' 
 #' beta_true <- matrix(c(1.5, -1, 0.5, -1, 1, -0.5, 0, 0, 0.5), nrow=p, byrow=TRUE)
@@ -33,6 +35,7 @@
 #' 
 #' beta_init <- matrix(0, nrow=p, ncol=K)
 #' 
+#' # Fit LRMultiClass
 #' res_C <- LRMultiClass(X, y, beta_init, numIter=20, eta=0.5, lambda=0.1)
 #' 
 #' 
