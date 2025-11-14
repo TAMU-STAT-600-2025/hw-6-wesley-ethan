@@ -7,7 +7,7 @@
 // RcppArmadillo so that the build process will know what to do
 
 // [[Rcpp::depends(RcppArmadillo)]]
-//softmax helper
+// Softmax helper
 arma::mat softmax_c(const arma::mat& Z){
   int n = Z.n_rows;
   int K = Z.n_cols;
@@ -24,7 +24,7 @@ arma::mat softmax_c(const arma::mat& Z){
 }
 
 // [[Rcpp::depends(RcppArmadillo)]]
-//calc obj helper
+// Objective function helper
 double calc_obj_c(const arma::mat& X, const arma::uvec& y, 
                 const arma::mat& beta, double lambda){
   int n = X.n_rows;
@@ -58,9 +58,9 @@ Rcpp::List LRMultiClass_c(const arma::mat& X, const arma::uvec& y, const arma::m
                                int numIter = 50, double eta = 0.1, double lambda = 1){
     // All input is assumed to be correct
     
-    // Initialize some parameters
+    // Initialize parameters
     int K = y.max() + 1; // number of classes
-    int p = X.n_cols;
+    int p = X.n_cols; // number of variables
     arma::mat beta = beta_init; // to store betas and be able to change them if needed
     arma::vec objective(numIter + 1); // to store objective values
     
