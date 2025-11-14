@@ -10,6 +10,7 @@
 #'
 #' @examples
 #' # Simulated data around two clusters
+#' set.seed(12)
 #' X <- rbind(matrix(rnorm(10 * 5, 10), 10, 5), matrix(rnorm(10 * 5, -10), 10, 5))
 #' 
 #' # Cluster data around centers
