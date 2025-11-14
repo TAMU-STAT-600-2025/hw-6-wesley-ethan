@@ -71,7 +71,7 @@ LRMultiClass <- function(X, y, beta_init = NULL, numIter = 50, eta = 0.1, lambda
   if(is.null(beta_init)){
     beta = matrix(0, nrow = p, ncol = K)
   } else { 
-    # beta dim check
+    # Check dimensions of beta are compatible
     if(nrow(beta_init) != p){
       stop(paste0("beta_init must have ", p, " rows"))
     }
